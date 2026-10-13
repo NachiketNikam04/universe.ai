@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>universe.ai — Explore Your Universe</title>
+  <meta name="description" content="universe.ai — A cinematic, Gemini-powered AI chatbot interface for boundless curiosity and intelligent conversation." />
+  <meta name="theme-color" content="#04050a" />
+
+  <!-- Preconnect to Google Fonts for elegant typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="/css/styles.css" />
+
+  <!-- Vendor Libraries for Safe Markdown Rendering (Local, Offline, Build-less) -->
+  <script src="/vendor/marked.umd.js" defer></script>
+  <script src="/vendor/purify.min.js" defer></script>
+
+  <!-- Application Logic -->
+  <script src="/js/app.js" defer></script>
+</head>
+<body>
+  <!-- Fullscreen Video Background with Cosmic Fallback -->
+  <div class="video-bg-container" id="videoContainer" aria-hidden="true">
+    <video
+      id="bgVideo"
+      class="video-bg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      tabindex="-1"
+    >
+      <source src="/assets/universe-background.mp4" type="video/mp4" />
+    </video>
+    <!-- Darkened gradient vignette overlay for optimal text contrast -->
+    <div class="video-overlay"></div>
+    <!-- Ambient CSS cosmic nebula & star shimmer fallback -->
+    <div class="cosmic-stars-layer"></div>
+  </div>
+
+  <!-- Primary Application Container -->
+  <div class="app-layout" id="appLayout">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="#" class="brand-logo" id="logoBtn" aria-label="universe.ai home">
+          <svg class="brand-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="16" cy="16" r="3" fill="#a78bfa" />
+            <ellipse cx="16" cy="16" rx="13" ry="5.5" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="1 0" transform="rotate(-25 16 16)" />
+            <ellipse cx="16" cy="16" rx="13" ry="5.5" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" transform="rotate(35 16 16)" />
+            <circle cx="27" cy="12" r="1.5" fill="#38bdf8" />
+            <circle cx="6" cy="21" r="1.2" fill="#c084fc" />
+          </svg>
+          <span class="brand-name">universe<span class="brand-tld">.ai</span></span>
+        </a>
+
+        <div class="status-badge" role="status" aria-live="polite">
+          <span class="status-pulse-dot" aria-hidden="true"></span>
+          <span class="status-text">Your universe of ideas</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button id="newChatBtn" class="btn-new-chat" type="button" aria-label="Start new conversation" title="Start a fresh conversation">
+          <svg class="btn-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v11m-5.5-5.5h11" />
+          </svg>
+          <span>New Chat</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Chat & Welcome Area (Independently Scrollable) -->
+    <main class="chat-viewport" id="chatViewport" role="region" aria-label="Conversation area">
+      <div class="chat-inner-container">
+        <!-- Welcome Hero View (Displayed when conversation history is empty) -->
+        <section class="welcome-section" id="welcomeView" aria-label="Welcome to universe.ai">
+          <div class="welcome-pill">
+            <span class="sparkle-icon">✦</span>
+            <span>Gemini-Powered Intelligence</span>
+          </div>
+
+          <h1 class="welcome-heading">Explore your universe.</h1>
+          <p class="welcome-subtext">Ask anything. Discover everything.</p>
+
+          <!-- Suggested Prompt Cards -->
+          <div class="suggestions-grid" role="group" aria-label="Suggested prompts">
+            <button
+              class="suggestion-card"
+              type="button"
+              data-prompt="Explain a complex concept simply: How does quantum entanglement work, and why did Einstein call it spooky action at a distance?"
+            >
+              <div class="card-icon">💡</div>
+              <div class="card-body">
+                <span class="card-title">Explain a complex concept simply</span>
+                <span class="card-desc">Understand quantum entanglement and cosmic mysteries in plain language.</span>
+              </div>
+            </button>
+
+            <button
+              class="suggestion-card"
+              type="button"
+              data-prompt="Help me write better code: What are the top best practices for building scalable, clean async APIs in Node.js with graceful error handling?"
+            >
+              <div class="card-icon">⚡</div>
+              <div class="card-body">
+                <span class="card-title">Help me write better code</span>
+                <span class="card-desc">Review patterns, debug logic, and optimize modern software architecture.</span>
+              </div>
+            </button>
+
+            <button
+              class="suggestion-card"
+              type="button"
+              data-prompt="Brainstorm something creative: Give me 4 compelling, original sci-fi story hooks set on a rogue planet wandering interstellar space."
+            >
+              <div class="card-icon">🪐</div>
+              <div class="card-body">
+                <span class="card-title">Brainstorm something creative</span>
+                <span class="card-desc">Unleash fresh perspectives, cosmic worldbuilding, and imaginative narratives.</span>
+              </div>
+            </button>
+
+            <button
+              class="suggestion-card"
+              type="button"
+              data-prompt="Teach me something new: What is something counterintuitive and mind-bending about the nature of time or cosmic expansion?"
+            >
+              <div class="card-icon">🔭</div>
+              <div class="card-body">
+                <span class="card-title">Teach me something new</span>
+                <span class="card-desc">Discover mind-expanding principles of astrophysics, philosophy, and mathematics.</span>
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <!-- Dynamic Message Stream (Populated as turns occur) -->
+        <div class="messages-stream" id="messagesStream" role="log" aria-live="polite" aria-atomic="false">
+          <!-- Messages will be injected here dynamically -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Message Composer -->
+    <footer class="composer-container">
+      <div class="composer-wrapper">
+        <form id="chatForm" class="composer-box" onsubmit="return false;">
+          <textarea
+            id="messageInput"
+            class="composer-textarea"
+            rows="1"
+            placeholder="Message universe.ai... (Shift + Enter for new line)"
+            aria-label="Message input"
+            maxlength="4000"
+          ></textarea>
+
+          <button
+            type="submit"
+            id="sendBtn"
+            class="composer-send-btn"
+            disabled
+            aria-label="Send message"
+            title="Send message (Enter)"
+          >
+            <svg class="send-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+
+        <p class="composer-disclaimer">
+          AI can make mistakes. Verify important information.
+        </p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
